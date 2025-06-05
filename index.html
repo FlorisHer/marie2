@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>marie2</title>
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .chat-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    img.logo {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: #007b5e;
+      margin: 10px 0 5px 0;
+      font-size: 32px;
+    }
+
+    h2 {
+      color: #555;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    input {
+      width: 80%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007b5e;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005c49;
+    }
+
+    pre {
+      margin-top: 20px;
+      text-align: left;
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      min-height: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-box">
+    <img class="logo" src="ahv-logo.jpg" alt="marie2 logo" />
+    <h1>marie2</h1>
+    <h2>marie2 – stel je vraag aan onze digitale assistent</h2>
+    <input id="userInput" placeholder="Typ hier je vraag..." />
+    <br />
+    <button onclick="sendToGPT()">Verstuur</button>
+    <pre id="response">Antwoord verschijnt hier...</pre>
+  </div>
+
+  <script>
+    async function sendToGPT() {
+      const input = document.getElementById("userInput").value;
+      const responseEl = document.getElementById("response");
+
+      responseEl.innerText = "Even nadenken...";
+
+      try {
+        const res = await fetch("https://hook.eu2.make.com/u2luxbx3o1wihpsbysz8gelret1x0jze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: input })
+        });
+
+        const reply = await res.text();
+        responseEl.innerText = reply || "Geen antwoord ontvangen.";
+      } catch (err) {
+        responseEl.innerText = "Fout: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
